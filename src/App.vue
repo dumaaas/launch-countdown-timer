@@ -410,7 +410,7 @@ body {
   }
 
   section {
-    margin-top: -150px;
+    margin-top: -200px;
   }
 
   footer {
@@ -422,7 +422,7 @@ body {
     bottom: 0;
     left: 50%;
     z-index: 999;
-    transform: translate(-50%, -93px);
+    transform: translate(-50%, -103px);
 
     svg {
       cursor: pointer;
@@ -438,7 +438,7 @@ body {
   h1 {
     color: white;
     text-transform: uppercase;
-    font-size: 28px;
+    font-size: 24px;
     letter-spacing: 8px;
     text-align: center;
     transition: color 0.8s linear;
@@ -555,7 +555,7 @@ body {
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      gap: 16px;
+      gap: 23px;
       position: relative;
 
       &__card {
@@ -563,7 +563,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 80px;
+        font-size: 78px;
         color: hsl(345, 95%, 68%);
         background-color: hsl(236, 21%, 26%);
         border-radius: 8px;
@@ -609,7 +609,7 @@ body {
         }
       }
       &__footer {
-        font-size: 18px;
+        font-size: 14px;
         color: hsl(237, 18%, 59%);
         letter-spacing: 6px;
         transition: color 0.8s linear;
