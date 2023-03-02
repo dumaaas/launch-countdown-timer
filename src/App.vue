@@ -410,7 +410,7 @@ body {
   }
 
   section {
-    margin-top: -200px;
+    margin-top: -210px;
   }
 
   footer {
@@ -422,7 +422,7 @@ body {
     bottom: 0;
     left: 50%;
     z-index: 999;
-    transform: translate(-50%, -103px);
+    transform: translate(-50%, -70px);
 
     svg {
       cursor: pointer;
@@ -438,7 +438,7 @@ body {
   h1 {
     color: white;
     text-transform: uppercase;
-    font-size: 24px;
+    font-size: 21px;
     letter-spacing: 8px;
     text-align: center;
     transition: color 0.8s linear;
@@ -537,7 +537,7 @@ body {
     z-index: 1000;
     display: flex;
     gap: 30px;
-    margin-top: 100px;
+    margin-top: 105px;
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
@@ -591,9 +591,9 @@ body {
         &::before {
           content: "";
           position: absolute;
-          left: -7px;
-          width: 14px;
-          height: 14px;
+          left: -6px;
+          width: 12px;
+          height: 12px;
           background: hsl(234, 17%, 12%);
           border-radius: 50%;
         }
@@ -601,9 +601,9 @@ body {
         &::after {
           content: "";
           position: absolute;
-          right: -7px;
-          width: 14px;
-          height: 14px;
+          right: -6px;
+          width: 12px;
+          height: 12px;
           background: hsl(234, 17%, 12%);
           border-radius: 50%;
         }
