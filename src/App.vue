@@ -5,29 +5,95 @@
       <div class="counter">
         <div class="counter-block">
           <div class="counter-block__card">
-            {{ countdown.days.toString().padStart(2, "0") }}
-            <div class="counter-block__card-divider"></div>
+            <div class="counter-block__card--top">
+              {{ countdown.days.toString().padStart(2, "0") }}
+            </div>
+            <div
+              class="counter-block__card--center flip-card"
+              :class="flipItDay ? 'flip' : ''"
+            >
+              <span class="flip-card__bottom">{{
+                countdown.days.toString().padStart(2, "0")
+              }}</span>
+              <span class="flip-card__top">{{
+                (countdown.days + 1).toString().padStart(2, "0")
+              }}</span>
+            </div>
+            <div class="counter-block__card--bottom">
+              {{ (countdown.days + 1).toString().padStart(2, "0") }}
+            </div>
           </div>
           <div class="counter-block__footer">DAYS</div>
         </div>
         <div class="counter-block">
           <div class="counter-block__card">
-            {{ countdown.hours.toString().padStart(2, "0") }}
-            <div class="counter-block__card-divider"></div>
+            <div class="counter-block__card--top">
+              {{ countdown.hours.toString().padStart(2, "0") }}
+            </div>
+            <div
+              class="counter-block__card--center flip-card"
+              :class="flipItHour ? 'flip' : ''"
+            >
+              <span class="flip-card__bottom">{{
+                countdown.hours.toString().padStart(2, "0")
+              }}</span>
+              <span class="flip-card__top">{{
+                (countdown.hours + 1).toString().padStart(2, "0")
+              }}</span>
+            </div>
+            <div class="counter-block__card--bottom">
+              {{ (countdown.hours + 1).toString().padStart(2, "0") }}
+            </div>
           </div>
           <div class="counter-block__footer">HOURS</div>
         </div>
         <div class="counter-block">
           <div class="counter-block__card">
-            {{ countdown.minutes.toString().padStart(2, "0") }}
-            <div class="counter-block__card-divider"></div>
+            <div class="counter-block__card--top">
+              {{ countdown.minutes.toString().padStart(2, "0") }}
+            </div>
+            <div
+              class="counter-block__card--center flip-card"
+              :class="flipItMinute ? 'flip' : ''"
+            >
+              <span class="flip-card__bottom">{{
+                countdown.minutes.toString().padStart(2, "0")
+              }}</span>
+              <span class="flip-card__top">{{
+                (countdown.minutes + 1).toString().padStart(2, "0")
+              }}</span>
+            </div>
+            <div class="counter-block__card--bottom">
+              {{ (countdown.minutes + 1).toString().padStart(2, "0") }}
+            </div>
           </div>
           <div class="counter-block__footer">MINUTES</div>
         </div>
         <div class="counter-block">
           <div class="counter-block__card">
-            {{ countdown.seconds.toString().padStart(2, "0") }}
-            <div class="counter-block__card-divider"></div>
+            <div class="counter-block__card--top">
+              {{ countdown.seconds.toString().padStart(2, "0") }}
+            </div>
+            <div
+              class="counter-block__card--center flip-card"
+              :class="flipItSecond ? 'flip' : ''"
+            >
+              <span class="flip-card__bottom">{{
+                countdown.seconds.toString().padStart(2, "0")
+              }}</span>
+              <span class="flip-card__top">{{
+                (countdown.seconds + 1).toString().padStart(2, "0") == "60"
+                  ? "00"
+                  : (countdown.seconds + 1).toString().padStart(2, "0")
+              }}</span>
+            </div>
+            <div class="counter-block__card--bottom">
+              {{
+                (countdown.seconds + 1).toString().padStart(2, "0") == "60"
+                  ? "00"
+                  : (countdown.seconds + 1).toString().padStart(2, "0")
+              }}
+            </div>
           </div>
           <div class="counter-block__footer">SECONDS</div>
         </div>
@@ -218,6 +284,10 @@ export default {
       darkMode: true,
       startDate: null,
       targetDate: null,
+      flipItDay: true,
+      flipItHour: true,
+      flipItMinute: true,
+      flipItSecond: true,
       countdown: {
         days: 0,
         hours: 0,
@@ -227,16 +297,51 @@ export default {
       rafId: null,
     };
   },
+  watch: {
+    "countdown.seconds"(newVal) {
+      this.flipItSecond = false;
+      if (newVal) {
+        setTimeout(() => {
+          this.flipItSecond = true;
+        });
+      }
+    },
+    "countdown.minutes"(newVal) {
+      this.flipItMinute = false;
+      if (newVal) {
+        setTimeout(() => {
+          this.flipItMinute = true;
+        });
+      }
+    },
+    "countdown.hours"(newVal) {
+      this.flipItHour = false;
+      if (newVal) {
+        setTimeout(() => {
+          this.flipItHour = true;
+        });
+      }
+    },
+    "countdown.days"(newVal) {
+      this.flipItDay = false;
+      if (newVal) {
+        setTimeout(() => {
+          this.flipItDay = true;
+        });
+      }
+    },
+  },
   mounted() {
+
     // Postavljamo datum koji predstavlja početni datum odbrojavanja
     this.startDate = new Date();
 
     // Postavljamo ciljani datum odbrojavanja
     this.targetDate = new Date();
-    this.targetDate.setDate(this.targetDate.getDate() + 9);
-    this.targetDate.setHours(8);
-    this.targetDate.setMinutes(15);
-    this.targetDate.setSeconds(48);
+    this.targetDate.setDate(this.targetDate.getDate() + 8);
+    this.targetDate.setHours(22);
+    this.targetDate.setMinutes(20);
+    this.targetDate.setSeconds(40);
 
     // Postavljamo funkciju koja će ažurirati countdown
     const updateCountdown = () => {
@@ -400,6 +505,31 @@ body {
           background-color: rgb(253, 222, 151);
           color: rgb(135, 165, 153);
           transition: background-color 0.8s linear, color 0.8s linear;
+
+          &--center {
+            color: rgba(135, 165, 153, 0.85);
+
+            .flip-card {
+              &__bottom {
+                background-color: rgb(253, 222, 151);
+                color: rgba(135, 165, 153, 1);
+              }
+              &__top {
+                background-color: rgb(249, 215, 107);
+                color: rgba(135, 165, 153, 0.85);
+              }
+            }
+          }
+
+          &--top {
+            background-color: rgb(249, 215, 107);
+            color: rgba(135, 165, 153, 0.85);
+          }
+
+          &--bottom {
+            background-color: rgb(253, 222, 151);
+            color: rgb(135, 165, 153);
+          }
         }
         &__footer {
           color: hsl(235, 16%, 14%);
@@ -442,7 +572,6 @@ body {
     letter-spacing: 8px;
     text-align: center;
     transition: color 0.8s linear;
-
     @media only screen and (max-width: 713px) {
       font-size: 22px;
     }
@@ -563,30 +692,16 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: row;
         font-size: 78px;
         color: hsl(345, 95%, 68%);
         background-color: hsl(236, 21%, 26%);
         border-radius: 8px;
-        width: 150px;
+        width: 140px;
         height: 140px;
         transition: background-color 0.8s linear, color 0.8s linear;
-        overflow: hidden;
         box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.8);
-
-        @media only screen and (max-width: 713px) {
-          width: 80px;
-          height: 70px;
-          font-size: 36px;
-        }
-
-        &-divider {
-          position: absolute;
-          left: 0;
-          height: 1px;
-          width: 100%;
-          background-color: hsl(235, 16%, 14%);
-          transition: background-color 0.8s linear;
-        }
+        overflow: hidden;
 
         &::before {
           content: "";
@@ -596,6 +711,7 @@ body {
           height: 12px;
           background: hsl(234, 17%, 12%);
           border-radius: 50%;
+          z-index: 1;
         }
 
         &::after {
@@ -606,6 +722,183 @@ body {
           height: 12px;
           background: hsl(234, 17%, 12%);
           border-radius: 50%;
+          z-index: 1;
+        }
+
+        @media only screen and (max-width: 713px) {
+          width: 80px;
+          height: 80px;
+          font-size: 36px;
+        }
+
+        &--center {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          border-radius: inherit;
+          color: rgba(251, 96, 135, 0.8);
+          width: 100%;
+          height: 50%;
+          transform-origin: center bottom;
+          transform: rotateX(0) translate3d(0, 0, 0);
+          transform-style: preserve-3d;
+          -webkit-transform: translate3d(0, 0, 0);
+          z-index: 2;
+          transition: background-color 0.8s linear, color 0.8s linear;
+
+          &.flip {
+            transform: rotateX(-180deg);
+            transition: transform 1s cubic-bezier(0.8, 0.8, 0.375, 1.275);
+          }
+          .flip-card {
+            &__bottom {
+              border-top-left-radius: 0;
+              border-top-right-radius: 0;
+              padding-bottom: 50%;
+              background-color: hsl(236, 21%, 26%);
+              color: rgba(251, 96, 135, 1);
+              transform: rotateX(-180deg);
+              z-index: 1;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: row;
+              -webkit-backface-visibility: hidden;
+              border-radius: inherit;
+              backface-visibility: hidden;
+              overflow: hidden;
+              box-shadow: 0 5px 2px hsl(234, 17%, 12%);
+              transition: background-color 0.8s linear, color 0.8s linear;
+
+              &::before {
+                content: "";
+                position: absolute;
+                left: -6px;
+                width: 12px;
+                height: 12px;
+                background: hsl(234, 17%, 12%);
+                border-radius: 50%;
+                z-index: 11;
+              }
+
+              &::after {
+                content: "";
+                position: absolute;
+                right: -6px;
+                width: 12px;
+                height: 12px;
+                background: hsl(234, 17%, 12%);
+                border-radius: 50%;
+                z-index: 11;
+              }
+            }
+            &__top {
+              border-bottom-left-radius: 0;
+              border-bottom-right-radius: 0;
+              padding-top: 50%;
+              color: rgba(251, 96, 135, 0.8);
+              background: #2a2b3c;
+              width: 100%;
+              height: 100%;
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: row;
+              -webkit-backface-visibility: hidden;
+              border-radius: inherit;
+              backface-visibility: hidden;
+              overflow: hidden;
+              box-shadow: 0 -5px 2px hsl(234, 17%, 12%);
+              transition: background-color 0.8s linear, color 0.8s linear;
+
+              &::before {
+                content: "";
+                position: absolute;
+                left: -6px;
+                width: 12px;
+                height: 12px;
+                background: hsl(234, 17%, 12%);
+                border-radius: 50%;
+                z-index: 11;
+              }
+
+              &::after {
+                content: "";
+                position: absolute;
+                right: -6px;
+                width: 12px;
+                height: 12px;
+                background: hsl(234, 17%, 12%);
+                border-radius: 50%;
+                z-index: 11;
+              }
+            }
+          }
+        }
+
+        &--top {
+          top: 0;
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+          padding-top: 50%;
+          color: rgba(251, 96, 135, 0.8);
+          background: #2a2b3c;
+          width: 100%;
+          height: 50%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          font-size: inherit;
+          transition: background-color 0.8s linear, color 0.8s linear;
+        }
+
+        &--bottom {
+          top: 50%;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          padding-bottom: 50%;
+          widows: 100%;
+          height: 50%;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          font-size: inherit;
+          transition: background-color 0.8s linear, color 0.8s linear;
+
+          color: hsl(345, 95%, 68%);
+          background-color: hsl(236, 21%, 26%);
         }
       }
       &__footer {
@@ -613,7 +906,6 @@ body {
         color: hsl(237, 18%, 59%);
         letter-spacing: 6px;
         transition: color 0.8s linear;
-
         @media only screen and (max-width: 713px) {
           font-size: 12px;
           letter-spacing: 2px;
